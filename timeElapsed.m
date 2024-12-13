@@ -44,13 +44,16 @@ accelDatetime=Acceleration.Timestamp;
 positionTime=timeElapsed(positionDatetime);
 accelTime=timeElapsed(accelDatetime);
 
+% Store the circumference of the earth in miles and create a variable to
+% store our total distance
 earthCirc = 24901;
 totaldis = 0;
+
 % Set stride as constant variable
 stride = 2.5; % Average stride (ft)
 
+% Loop over the data, store it in our distance array while summing up the distance
 distanceArray = [];
-% Loop over the data and sum up the distance
 for i = 1:(length(lat)-1)
     lat1 = lat(i); % The first latitude
     lat2 = lat(i+1); % The second latitude
@@ -64,8 +67,6 @@ for i = 1:(length(lat)-1)
     totaldis = totaldis + dis;
 end
 
-strides = distanceArray / stride;
-
 % Calculate steps based off stride
 totaldis_ft = totaldis*5280; % Converting distance from miles to feet
 steps = totaldis_ft/stride;
@@ -74,10 +75,10 @@ steps = totaldis_ft/stride;
 disp(['The total distance traveled is: ', num2str(totaldis),' miles'])
 disp(['You took ', num2str(steps) ' steps'])
 
-% Create a plot with our distance and steps
+% Create a plot with our distance
 plot(distanceArray);
 legend('Distance');
 xlabel('Time (s)')
-ylabel('Steps and Distance');
+ylabel('Distance');
 title('Distance Data Vs. Time');
 hold off
